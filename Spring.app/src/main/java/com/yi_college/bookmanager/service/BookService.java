@@ -1,35 +1,103 @@
 package com.yi_college.bookmanager.service;
 
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.yi_college.bookmanager.model.Book;
-
+import com.yi_college.bookmanager.model.BookModel;
+import com.yi_college.bookmanager.repository.BookRepository;
 
 @Service
 public class BookService {
-	
-	
-	
-    
-    public List<Book> getBooks(){
-    	return  Arrays.asList(
-     		   
-        		new Book(1,"ハリーポッター","J.K.ローリング","株式会社静山社",LocalDate.of(1999,12, 1),7),
-        		new Book(2,"星の王子様","アントワーヌ.ド.サン=テグジュペリ","新潮社",LocalDate.of(2006,3,28),3),
-        		new Book(3,"人間失格","太宰治","新潮社",LocalDate.of(2006,1,1),4),
-        		new Book(4,"吾輩は猫である","夏目漱石","文藝春秋",LocalDate.of(2011,11,10),4),
-        		new Book(5,"たけくらべ","樋口一葉","集英社",LocalDate.of(1993,12,15),5)
-        				
-        		   );
-	
-		
-		
-	}
-	
-			
 
+	private final BookRepository bookRepository;
+
+	@Autowired
+
+	public BookService(BookRepository bookRepository) {
+
+		this.bookRepository = bookRepository;
+
+	}
+
+	public List<BookModel> getAllBooks() {
+		List<Book> books = bookRepository.findAll();
+
+		if (books.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		}
+		List<BookModel> bookModels = new ArrayList<>();
+
+		for (Book book : books) {
+			BookModel model = new BookModel(
+					book.getId(),
+					book.getTitle(),
+					book.getAuthor(),
+					book.getPublisher(),
+					book.getPublishedDate(),
+					book.getStock());
+
+			bookModels.add(model);
+
+		}
+
+		return bookModels;
+
+	}
+
+	public BookModel createBook(BookModel bookModel) {
+
+		Book book = new Book(
+				bookModel.getTitle(),
+				bookModel.getAuthor(),
+				bookModel.getPublisher(),
+				bookModel.getPublishedDate(),
+				bookModel.getStock());
+
+		Book saved = bookRepository.save(book);
+
+		return new BookModel(
+				saved.getId(),
+				saved.getTitle(),
+				saved.getAuthor(),
+				saved.getPublisher(),
+				saved.getPublishedDate(),
+				saved.getStock()
+
+		);
+
+	}
+
+	public BookModel updateBook(Integer id, BookModel bookModel) {
+		Book book = bookRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("書籍が見つかりませんでした"));
+
+		book.setTitle(bookModel.getTitle());
+		book.setAuthor(bookModel.getAuthor());
+		book.setPublisher(bookModel.getPublisher());
+		book.setPublishedDate(bookModel.getPublishedDate());
+		book.setStock(bookModel.getStock());
+
+		Book updated = bookRepository.save(book);
+
+		return new BookModel(
+				updated.getId(),
+				updated.getTitle(),
+				updated.getAuthor(),
+				updated.getPublisher(),
+				updated.getPublishedDate(),
+				updated.getStock());
+	}
+
+	public void deleteBook(Integer id) {
+		Book book = bookRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("書籍が見つかりませんでした"));
+		bookRepository.delete(book);
+
+	}
 }

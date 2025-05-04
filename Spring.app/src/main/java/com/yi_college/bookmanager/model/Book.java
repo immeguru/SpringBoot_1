@@ -2,76 +2,38 @@ package com.yi_college.bookmanager.model;
 
 import java.time.LocalDate;
 
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-@Getter
-@Setter
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "book")
+@Data
+@NoArgsConstructor
+
 public class Book {
-	
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	private Integer id;
 	private String title;
 	private String author;
 	private String publisher;
-	private LocalDate publicationdate;
-	private int stock;
-	
-	public Book(int id, String title, String author, String publisher, LocalDate publicationDate, int stock) {
-		// TODO 自動生成されたコンストラクター・スタブ
-//	    this.setId(id);
-//		this.setTitle(title);
-//		this.setAuthor(author);
-//		this.setPublisher(publisher);
-//		this.setPublicationdate(publicationDate);
-//		this.setStock(stock);
-		this.id = id;
+	private LocalDate publishedDate;
+	private Integer stock;
+
+	public Book(String title, String author, String publisher, LocalDate publicationDate, Integer stock) {
+
 		this.title = title;
 		this.author = author;
 		this.publisher = publisher;
-		this.publicationdate = publicationDate;
+		this.publishedDate = publicationDate;
 		this.stock = stock;
-		
+
 	}
-	
-//	public int getId() {
-//		return id;
-//	}
-//	public void setId(int id) {
-//		this.id = id;
-//	}
-//	public String getTitle() {
-//		return title;
-//	}
-//	public void setTitle(String title) {
-//		this.title = title;
-//	}
-//	public LocalDate getPublicationdate() {
-//		return publicationdate;
-//	}
-//	public void setPublicationdate(LocalDate publicationdate) {
-//		this.publicationdate = publicationdate;
-//	}
-//	public String getPublisher() {
-//		return publisher;
-//	}
-//	public void setPublisher(String publisher) {
-//		this.publisher = publisher;
-//	}
-//	public int getStock() {
-//		return stock;
-//	}
-//	public void setStock(int stock) {
-//		this.stock = stock;
-//	}
-//	public String getAuthor() {
-//		return author;
-//	}
-//	public void setAuthor(String author) {
-//		this.author = author;
-//	}
-	
+
 }
-
-
-
-
