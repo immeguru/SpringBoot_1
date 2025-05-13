@@ -1,5 +1,7 @@
 package com.yi_college.bookmanager.model;
 
+
+
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "book")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 
 public class Book {
 	@Id

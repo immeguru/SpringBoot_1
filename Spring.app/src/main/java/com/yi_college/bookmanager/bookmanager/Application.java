@@ -1,5 +1,4 @@
-package com.yi_college.bookmanager.bookmanager;  // ○ repositoryやmodelと同階層にする
-
+package com.yi_college.bookmanager.bookmanager; // ○ repositoryやmodelと同階層にする
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

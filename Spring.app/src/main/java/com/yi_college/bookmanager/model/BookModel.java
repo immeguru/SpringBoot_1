@@ -25,15 +25,6 @@ public class BookModel {
 	private LocalDate publishedDate;
 	private Integer stock;
 
-	//	public BookModel {
-	//		// TODO 自動生成されたコンストラクター・スタブ
-	//
-	//	this.id = id;
-	//	this.title = title;
-	//	this.author = author;
-	//	this.publisher = publisher;
-	//	this.publicationdate = publicationdate;		
-	//	this.stock = stock;
-	//	
+	
 
 }
